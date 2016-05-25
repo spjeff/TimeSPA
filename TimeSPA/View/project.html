@@ -1,0 +1,18 @@
+﻿<h1>Project</h1>
+
+<table>
+    <tr ng-repeat="p in project">
+            
+        <td>{{p.ID}}</td>
+        <td><input type="text" ng-model="p.name" /></td>
+        <td><input type="text" ng-model="p.approver" /></td>
+        <td>
+            <i class="fa fa-lg fa-times-circle" ng-click="delete(p)" title="Delete"></i>
+        </td>
+    </tr>
+</table>
+
+    
+<i class="fa fa-lg fa-plus-circle" ng-click="add()"></i>
+<button ng-click="add()">Add</button>
+

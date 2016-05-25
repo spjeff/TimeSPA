@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Timesheet</title>
+    <meta charset="utf-8" />
+
+    <!-- stylesheet -->
+    <link href="timesheet.css" rel="stylesheet" />
+    <link href="Content/font-awesome.css" rel="stylesheet" />
+    <link href="Content/toastr.css" rel="stylesheet" />
+
+
+    <!-- library -->
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/angular-route.js"></script>
+    <script src="Scripts/breeze.debug.js"></script>
+    <script src="Scripts/breeze.bridge.angular.js"></script>
+    <script src="Scripts/d3/d3.js"></script>
+    <script src="Scripts/moment.js"></script>
+    <script src="Scripts/jquery-2.2.3.js"></script>
+    <script src="Scripts/toastr.js"></script>
+
+    <!-- ADAL -->
+    <script src="Scripts/adal.js"></script>
+    <script src="Scripts/adal-angular.js"></script>
+
+    <!-- main -->
+    <script src="App/util.js"></script>
+    <script src="App/app.js"></script>
+
+    <!-- controller -->
+    <script src="App/indexCtl.js"></script>
+    <script src="App/timeCtl.js"></script>
+    <script src="App/projectCtl.js"></script>
+    <script src="App/reportCtl.js"></script>
+
+</head>
+<body>
+
+    <div ng-app="timeApp">
+        <div ng-controller="indexCtl">
+
+            <!-- navigation -->
+            <table width="100%" border="0">
+                <tr>
+                    <td class="tsNavLeft">
+                        <a href="#/time">Time</a>
+                        <a href="#/project">Project</a>
+                        <a href="#/report">Report</a>
+                    </td>
+                    <td class="tsNavRight">
+                        <input type="text" ng-model="current.login" />
+
+
+                        <a href="" ng-show="userInfo.isAuthenticated" ng-click="logout()">Logout</a>
+                        <a href="" ng-hide="userInfo.isAuthenticated" ng-click="login()">Login</a>
+
+
+                    </td>
+                </tr>
+            </table>
+
+            <!-- view -->
+            <hr />
+            <ng-view></ng-view>
+        </div>
+    </div>
+</body>
+</html>

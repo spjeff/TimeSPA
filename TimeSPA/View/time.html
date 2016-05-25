@@ -1,0 +1,90 @@
+﻿<table border="0" class="ts" cellspacing="0">
+    <tr>
+        <td>
+            <h1>Timesheet</h1>
+        </td>
+        <td colspan="9" class="tsWeekEnd">
+            <div>Week Ending</div>
+            <button ng-click="prevWeek()">&lt;</button>
+            <span ng-bind="current.week"></span>
+            <button ng-click="nextWeek()">&gt;</button>
+        </td>
+    </tr>
+
+    <tr class="tsHeader">
+        <td></td>
+        <td>Sat</td>
+        <td>Sun</td>
+        <td>Mon</td>
+        <td>Tue</td>
+        <td>Wed</td>
+        <td>Thu</td>
+        <td>Fri</td>
+    </tr>
+
+    <tr ng-show="!timesheet" class="tsMissing">
+        <td colspan="9">
+            <i class="fa fa-lg fa-plus-circle" ng-click="newTimesheet()"></i>
+            <button ng-click="newTimesheet()">New Timesheet</button>
+        </td>
+    </tr>
+
+    <tr class="tsRow" ng-repeat="r in timesheet.timerow" ng-show="timesheet">
+        <td>
+            <select class="tsProj" ng-class="{'tsEmptyCell' : !r.projectID}" ng-model="r.projectID" ng-options="p.iD as p.name for p in project"></select>
+            <br />
+            <select class="tsCode" ng-class="{'tsEmptyCell' : !r.code}" ng-model="r.code" ng-options="c.name as c.name for c in timeCodes"></select>
+            <br />
+            <textarea class="tsComment" ng-class="{'tsEmptyCell' : !r.comment}" ng-model="r.comment"></textarea>
+        </td>
+
+        <td><input class="tsHour" ng-class="{'tsEmptyCell' : r.sat == null}" type="number" size="2" maxlength="4" ng-model="r.sat" onkeypress="return timesheet.inputHour(event)" /></td>
+        <td><input class="tsHour" ng-class="{'tsEmptyCell' : r.sun == null}" type="number" size="2" maxlength="4" ng-model="r.sun" onkeypress="return timesheet.inputHour(event)" /></td>
+        <td><input class="tsHour" ng-class="{'tsEmptyCell' : r.mon == null}" type="number" size="2" maxlength="4" ng-model="r.mon" onkeypress="return timesheet.inputHour(event)" /></td>
+        <td><input class="tsHour" ng-class="{'tsEmptyCell' : r.tue == null}" type="number" size="2" maxlength="4" ng-model="r.tue" onkeypress="return timesheet.inputHour(event)" /></td>
+        <td><input class="tsHour" ng-class="{'tsEmptyCell' : r.wed == null}" type="number" size="2" maxlength="4" ng-model="r.wed" onkeypress="return timesheet.inputHour(event)" /></td>
+        <td><input class="tsHour" ng-class="{'tsEmptyCell' : r.thu == null}" type="number" size="2" maxlength="4" ng-model="r.thu" onkeypress="return timesheet.inputHour(event)" /></td>
+        <td><input class="tsHour" ng-class="{'tsEmptyCell' : r.fri == null}" type="number" size="2" maxlength="4" ng-model="r.fri" onkeypress="return timesheet.inputHour(event)" /></td>
+
+        <td><i class="fa fa-lg fa-times-circle" ng-click="delete(r)" title="Delete"></i></td>
+
+        <td>{{totalRow(r)}}</td>
+
+        <td>
+            <button ng-click="approve(r)" ng-show="approve">Approve</button>
+        </td>
+    </tr>
+
+    <tr ng-show="timesheet">
+        <td></td>
+        <td>{{totalCol('sat')}}</td>
+        <td>{{totalCol('sun')}}</td>
+        <td>{{totalCol('mon')}}</td>
+        <td>{{totalCol('tue')}}</td>
+        <td>{{totalCol('wed')}}</td>
+        <td>{{totalCol('thr')}}</td>
+        <td>{{totalCol('fri')}}</td>
+        <td>{{totalCol('all')}}</td>
+    </tr>
+
+    <tr ng-show="timesheet">
+        <td colspan="9">
+            <i class="fa fa-lg fa-plus-circle" ng-click="addRow()"></i>
+            <button ng-click="addRow()">Add</button>
+        </td>
+    </tr>
+
+    <tr ng-show="timesheet">
+        <td colspan="9" class="tsWeekEnd">
+            <label><input type="checkbox" name="checkbox" ng-model="approve">Approval Mode</label>
+        </td>
+    </tr>
+
+    <tr ng-show="timesheet">
+        <td colspan="9" class="tsWeekEnd">
+            <textarea ng-model="timesheet.comments"></textarea>
+        </td>
+    </tr>
+
+</table>
+

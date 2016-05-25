@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TimeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" />
+          <Property Name="Approver" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Timerow">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TimesheetID" Type="int" Nullable="false" />
+          <Property Name="ProjectID" Type="int" />
+          <Property Name="Code" Type="varchar" MaxLength="255" />
+          <Property Name="Location" Type="varchar" MaxLength="255" />
+          <Property Name="Comment" Type="varchar" MaxLength="2000" />
+          <Property Name="Sat" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Sun" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Mon" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Tue" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Wed" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Thu" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Fri" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ApproveBy" Type="varchar" MaxLength="255" />
+          <Property Name="ApproveDate" Type="date" />
+          <Property Name="ApproveNotes" Type="varchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="Timesheet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Author" Type="varchar" MaxLength="255" />
+          <Property Name="WeekEnding" Type="date" />
+          <Property Name="Comments" Type="varchar" MaxLength="2000" />
+        </EntityType>
+        <Association Name="FK_Timerow_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="Timerow" Type="Self.Timerow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Timerow">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Timerow_Timesheet">
+          <End Role="Timesheet" Type="Self.Timesheet" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Timerow" Type="Self.Timerow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timesheet">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Timerow">
+              <PropertyRef Name="TimesheetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TimeModelStoreContainer">
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Timerow" EntityType="Self.Timerow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Timesheet" EntityType="Self.Timesheet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Timerow_Project" Association="Self.FK_Timerow_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Timerow" EntitySet="Timerow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Timerow_Timesheet" Association="Self.FK_Timerow_Timesheet">
+            <End Role="Timesheet" EntitySet="Timesheet" />
+            <End Role="Timerow" EntitySet="Timerow" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Timesheet" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Approver" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Timerow" Relationship="Self.FK_Timerow_Project" FromRole="Project" ToRole="Timerow" />
+        </EntityType>
+        <EntityType Name="Timerow">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TimesheetID" Type="Int32" Nullable="false" />
+          <Property Name="ProjectID" Type="Int32" />
+          <Property Name="Code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="Sat" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Sun" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Mon" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Tue" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Wed" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Thu" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Fri" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ApproveBy" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ApproveDate" Type="DateTime" Precision="0" />
+          <Property Name="ApproveNotes" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Project" Relationship="Self.FK_Timerow_Project" FromRole="Timerow" ToRole="Project" />
+          <NavigationProperty Name="Timesheet" Relationship="Self.FK_Timerow_Timesheet" FromRole="Timerow" ToRole="Timesheet" />
+        </EntityType>
+        <EntityType Name="Timesheet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Author" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="WeekEnding" Type="DateTime" Precision="0" />
+          <Property Name="Comments" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Timerow" Relationship="Self.FK_Timerow_Timesheet" FromRole="Timesheet" ToRole="Timerow" />
+        </EntityType>
+        <Association Name="FK_Timerow_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="Timerow" Type="Self.Timerow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Timerow">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Timerow_Timesheet">
+          <End Role="Timesheet" Type="Self.Timesheet" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Timerow" Type="Self.Timerow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Timesheet">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Timerow">
+              <PropertyRef Name="TimesheetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TimeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Project" EntityType="Self.Project" />
+          <EntitySet Name="Timerow" EntityType="Self.Timerow" />
+          <EntitySet Name="Timesheet" EntityType="Self.Timesheet" />
+          <AssociationSet Name="FK_Timerow_Project" Association="Self.FK_Timerow_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Timerow" EntitySet="Timerow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Timerow_Timesheet" Association="Self.FK_Timerow_Timesheet">
+            <End Role="Timesheet" EntitySet="Timesheet" />
+            <End Role="Timerow" EntitySet="Timerow" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TimeModelStoreContainer" CdmEntityContainer="TimeEntities">
+          <EntitySetMapping Name="Project">
+            <EntityTypeMapping TypeName="Timesheet.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Approver" ColumnName="Approver" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Timerow">
+            <EntityTypeMapping TypeName="Timesheet.Timerow">
+              <MappingFragment StoreEntitySet="Timerow">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TimesheetID" ColumnName="TimesheetID" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Sat" ColumnName="Sat" />
+                <ScalarProperty Name="Sun" ColumnName="Sun" />
+                <ScalarProperty Name="Mon" ColumnName="Mon" />
+                <ScalarProperty Name="Tue" ColumnName="Tue" />
+                <ScalarProperty Name="Wed" ColumnName="Wed" />
+                <ScalarProperty Name="Thu" ColumnName="Thu" />
+                <ScalarProperty Name="Fri" ColumnName="Fri" />
+                <ScalarProperty Name="ApproveBy" ColumnName="ApproveBy" />
+                <ScalarProperty Name="ApproveDate" ColumnName="ApproveDate" />
+                <ScalarProperty Name="ApproveNotes" ColumnName="ApproveNotes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Timesheet">
+            <EntityTypeMapping TypeName="Timesheet.Timesheet">
+              <MappingFragment StoreEntitySet="Timesheet">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="WeekEnding" ColumnName="WeekEnding" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

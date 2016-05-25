@@ -1,0 +1,46 @@
+﻿.tsWeekEnd textarea {
+    width:100%;
+}
+table.ts {
+    min-width:800px;
+    width:800px;
+}
+.tsMissing {
+    background-color:lightgray;
+}
+.tsNavLeft {
+    text-align:left;
+}
+.tsNavRight {
+    text-align:right;
+}
+.tsWeekEnd {
+    text-align:right;
+    padding-bottom:20px;
+}
+.tsWeekEnd div {
+    font-weight:bold;
+}
+.tsHeader td {
+    font-weight:bold;
+}
+.tsHour {
+    width:40px;
+}
+.tsProj {
+    width:200px;
+}
+.tsComment {
+    width:195px;
+}
+.tsRow td {
+    vertical-align:top;
+    padding:5px;
+}
+.tsRow:nth-child(even) {
+    background-color: lightgray;
+}
+.tsEmptyCell {
+    background-color:yellow;
+    border: 1px dashed red;
+}
